@@ -56,7 +56,7 @@ default_asides:
 - custom/asides/chuck_norris.html
 - asides/recent_posts.html
 - asides/github.html
-- asides/twitter.html
+- custom/asides/twitter.html
 - asides/delicious.html
 - asides/pinboard.html
 - asides/googleplus.html
