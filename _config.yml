@@ -2,12 +2,14 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://tknerr.github.io
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+url: http://blog.tknerr.de
+title: My Techmumble Octo-Blog
+subtitle: Ramblings about tech stuff that matters to me
+author: Torben Knerr
 simple_search: https://www.google.com/search
-description:
+description: >
+  infrastructure-as-code with vagrant, chef and berkshelf,
+  spiced with pieces of ruby and maybe bits of java.
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
