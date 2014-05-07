@@ -14,6 +14,8 @@ This is the obligatory first post, you know what comes now:
 
 Fair enough. Now: to make this first post actually a litte useful here are the links that led me here:
 
+<!-- more -->
+
 * How to build [CMS-free Websites](http://developmentseed.org/blog/2012/07/27/build-cms-free-websites/) with Github Pages and Jekyll
 * How trunk club [moved to Octopress + Prose + Github + Travis CI](http://techblog.trunkclub.com/moving-from-tumblr-to-octopress/)
 
