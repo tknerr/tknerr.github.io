@@ -5,14 +5,21 @@ branches:
 language: ruby
 rvm:
 - 1.9.3
+before_install:
+  - git config --global user.name "Travis CI"
+  - git config --global user.email "travis@travis-ci.org"
 before_script:
-- export REPO_URL="https://$GH_TOKEN@github.com/$GH_REPO.git"
-- bundle exec rake setup_github_pages[$REPO_URL]
+  - export REPO_URL="https://$GH_TOKEN@github.com/$GH_REPO.git"
+  - bundle exec rake setup_github_pages[$REPO_URL]
 script:
-- bundle exec rake generate
+  - bundle exec rake generate
 after_script:
-- bundle exec rake deploy
+  - bundle exec rake deploy
 env:
+  # Generate OAuth tokens for travis-ci using bash:
+  # $ gem install travis
+  # $ curl -u 'tknerr' -d '{"scopes":["public_repo"], "note":"Travis access"}' https://api.github.com/authorizations
+  # $ travis encrypt --add GH_TOKEN=your_token
   global:
-  - GH_REPO="tknerr/tknerr.github.io"
-  - secure: "W9KPJRYd6EIqQ1RYQBcCS8+CusLWJenTpPh7i7pIE5XoSVZ1WgQlL85EkhjpML5JCEgxgJIE4wkRzTQVdv/KzILjAUVDsVmrq2CnbOh8nzPeKj6I01MxhOgg9zUs59iBE+tLHsL0VRweLCARlzqhCEEfbRxFVMKBjHEuXlI78FU="
+    - GH_REPO="tknerr/tknerr.github.io"
+    - secure: "W9KPJRYd6EIqQ1RYQBcCS8+CusLWJenTpPh7i7pIE5XoSVZ1WgQlL85EkhjpML5JCEgxgJIE4wkRzTQVdv/KzILjAUVDsVmrq2CnbOh8nzPeKj6I01MxhOgg9zUs59iBE+tLHsL0VRweLCARlzqhCEEfbRxFVMKBjHEuXlI78FU="
