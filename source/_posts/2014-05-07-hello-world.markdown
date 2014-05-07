@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Hello World"
-date: 2014-05-07 12:27:23 +0200
+title: Hello World
+date: "2014-05-07 12:27:23 +0200"
 comments: true
 categories: helloworld
 published: true
@@ -20,5 +20,5 @@ Obligatory first post:
                 \    \`\`-.'-._;   / |
                  `    \    '   |    /
                        \  .`  /    ´
-                        |    |
+                        |    | 
 ```
