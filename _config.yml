@@ -57,9 +57,9 @@ default_asides:
 - asides/recent_posts.html
 - asides/github.html
 - custom/asides/twitter.html
-- asides/delicious.html
-- asides/pinboard.html
-- asides/googleplus.html
+#- asides/delicious.html
+#- asides/pinboard.html
+#- asides/googleplus.html
 
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
@@ -107,3 +107,44 @@ google_analytics_tracking_id: UA-50791105-1
 
 # Facebook Like
 facebook_like: false
+
+# prose.io settings
+# https://github.com/prose/prose/wiki/Prose-Configuration
+prose:
+  rooturl: 'source/_posts'
+  siteurl: 'http://blog.tknerr.de'
+  media: 'assets'
+  metadata:
+    source/_posts:
+      - name: "layout"
+        field:
+          element: "hidden"
+          value: "post"
+      - name: "title"
+        field:
+          element: "text"
+          label: "Title"
+          value: ""
+          type: "text"
+      - name: "categories"
+        field:
+          element: "multiselect"
+          label: "Post Category"
+          placeholder: "Create or choose"
+          alterable: true
+      - name: "comments"
+        field:
+          element: checkbox
+          label: "Comments"
+          value: "true"
+      - name: "tags"
+        field:
+          element: "multiselect"
+          label: "Add Tags"
+          placeholder: "Choose Tags"
+          alterable: true
+      - name: "published"
+        field:
+          label: "Published"
+          element: "checkbox"
+          value: false
