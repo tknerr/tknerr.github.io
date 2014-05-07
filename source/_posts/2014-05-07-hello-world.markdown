@@ -12,13 +12,13 @@ Obligatory first post:
 > **"Ohai there Octo-Bloggers around the world! :-)"**
 
 ```plain Wave your hands! http://www.ascii-art.de/ascii/ghi/hand.txt ASCII hand borrowed from here
-                      _.-._
-                     | | | |_
-              . /    | | | | |
-             | |     | | | | |  \
-             \ \   _ |  '-._ |   | |
-              \    \`\`-.'-._;   / |
-               `    \    '   |    /
-                     \  .`  /    ´
-                      |    |
+                        _.-._
+                       | | | |_
+                . /    | | | | |
+               | |     | | | | |  \
+               \ \   _ |  '-._ |   | |
+                \    \`\`-.'-._;   / |
+                 `    \    '   |    /
+                       \  .`  /    ´
+                        |    |
 ```
