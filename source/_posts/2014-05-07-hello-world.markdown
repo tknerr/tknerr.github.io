@@ -4,7 +4,7 @@ title: "Hello World :-)"
 date: 2014-05-07 12:27:23 +0200
 comments: true
 categories: 
-published: false
+published: true
 ---
 
 This is the obligatory first post, you know what comes now: 
