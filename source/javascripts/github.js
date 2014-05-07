@@ -23,6 +23,10 @@ var github = (function(){
             if (options.skip_forks && data.data[i].fork) { continue; }
             repos.push(data.data[i]);
           }
+          
+          // order by popularity 
+          repos.sort(function(a,b) { return parseInt(b.watchers_count) - parseInt(a.watchers_count) });
+          
           if (options.count) { repos.splice(options.count); }
           render(options.target, repos);
         }
