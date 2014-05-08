@@ -1,6 +1,35 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
 
+// keep serif font for blockquotes when using droid sans otherwise
 blockquote {
-	font-family: "PT Serif";
+  font-family: "PT Serif";
+}
+
+// social icons from here:
+// http://glyphicons.com/files/glyphicons_free.zip
+.icon {
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 24px;
+  vertical-align: middle;
+  width: 24px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.icon-twitter {
+  @extend .icon;
+  background-image: url("../images/glyphicons_social_31_twitter.png");
+}
+.icon-linkedin {
+  @extend .icon;
+  background-image: url("../images/glyphicons_social_17_linked_in.png");
+}
+.icon-xing {
+  @extend .icon;
+  background-image: url("../images/glyphicons_social_12_xing.png");
+}
+.icon-github {
+  @extend .icon;
+  background-image: url("../images/glyphicons_social_21_github.png");
 }
