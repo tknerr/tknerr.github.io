@@ -68,6 +68,9 @@ default_asides:
 # post_asides:
 # page_asides:
 
+# turn sidebar into a fat footer
+#sidebar: collapse
+
 # ----------------------- #
 #   3rd Party Settings    #
 # ----------------------- #
