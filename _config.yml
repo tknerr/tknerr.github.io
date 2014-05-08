@@ -112,7 +112,7 @@ facebook_like: false
 # https://github.com/prose/prose/wiki/Prose-Configuration
 prose:
   rooturl: 'source/_posts'
-  siteurl: 'http://tknerr.github.io'
+  siteurl: 'http://blog.tknerr.de'
   media: 'assets'
   metadata:
     source/_posts:
