@@ -7,7 +7,7 @@ It is hosted on [Github Pages](https://help.github.com/categories/20/articles) b
 Eventually I might create / edit posts on [prose.io](prose.io/#tknerr/tknerr.github.io), which makes it even easier on mobile devices or else if you don't have Git / Ruby etc. installed. But usually I prefer to work locally, in which case the workflow is:
 
 1. clone repo and check out the `source` branch (never edit `master` directly!)
-  * `git clone https://github.com/tknerr/tknerr.github.io`
+  * `git clone git@github.com:tknerr/tknerr.github.io.git`
   * `git checkout source`
 2. create / edit the posts
   * `rake new_post["some title"]`
