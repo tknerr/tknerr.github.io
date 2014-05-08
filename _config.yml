@@ -130,6 +130,13 @@ prose:
           label: "Title"
           value: ""
           type: "text"
+      - name: "author"
+        field:
+          element: "text"
+          label: "Author"
+          value: ""
+          placeholder: "Trunk Botterson"
+          type: "text"
       - name: "categories"
         field:
           element: "multiselect"
@@ -147,8 +154,3 @@ prose:
           label: "Add Tags"
           placeholder: "Choose Tags"
           alterable: true
-      - name: "published"
-        field:
-          label: "Published"
-          element: "checkbox"
-          value: false
