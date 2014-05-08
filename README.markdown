@@ -2,11 +2,9 @@
 
 This is the [Octopress](http://octopress.org/docs/) source branch of [my techblog](http://blog.tknerr.de). It contains the theme, layout, styling and most importantly the posts in [markdown format](daringfireball.net/projects/markdown/) in the `source/_posts` directory. 
 
-It is hosted on [Github Pages](https://help.github.com/categories/20/articles) but with a [custom domain name](https://github.com/tknerr/tknerr.github.io/blob/source/source/CNAME).
+It is hosted on [Github Pages](https://help.github.com/categories/20/articles) but with a [custom domain name](https://github.com/tknerr/tknerr.github.io/blob/source/source/CNAME). The site [regeneration and deplyoment](http://octopress.org/docs/deploying/github/) happens automatically via [travis-ci](https://travis-ci.org/) whenever something is pushed to the `source` branch (thanks to [this guide](http://rogerz.github.io/blog/2013/02/21/prose-io-github-travis-ci/)).
 
-The site [regeneration and deplyoment](http://octopress.org/docs/deploying/github/) happens automatically via [travis-ci](https://travis-ci.org/) whenever something is pushed to the `source` branch (thanks to [this guide](http://rogerz.github.io/blog/2013/02/21/prose-io-github-travis-ci/)).
-
-The workflow is as follows:
+Eventually I might create / edit posts on [prose.io](prose.io/#tknerr/tknerr.github.io), which makes it even easier on mobile devices or else if you don't have Git / Ruby etc. installed. But usually I prefer to work locally, in which case the workflow is:
 
 1. clone repo and check out the `source` branch (never edit `master` directly!)
   * `git clone https://github.com/tknerr/tknerr.github.io`
@@ -21,8 +19,6 @@ The workflow is as follows:
   * `git add . && git commit -m "add new blog post about foo"`
   * `git push origin source`
 
-
-Eventually I might create / edit posts on [prose.io](prose.io/#tknerr/tknerr.github.io), which makes it even easier on mobile devices or else if you don't have Git / Ruby etc. installed.
 
 Credits to @trunkclub for their guide [on setting this whole thing up](http://techblog.trunkclub.com/moving-from-tumblr-to-octopress/). 
 
