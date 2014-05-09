@@ -4,6 +4,12 @@
 // keep serif font for blockquotes when using droid sans otherwise
 blockquote {
   font-family: "PT Serif";
+  font-size: 18px;
+}
+
+// fix badly indented list items
+li {
+  margin-left: 35px;
 }
 
 // social icons from here:
