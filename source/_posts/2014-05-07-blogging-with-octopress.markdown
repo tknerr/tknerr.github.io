@@ -3,7 +3,7 @@ layout: post
 title: "Blogging with Octopress"
 date: 2014-05-07 21:50:25 +0200
 comments: true
-categories: 
+categories: Octopress
 published: false
 ---
 
