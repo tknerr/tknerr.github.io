@@ -1,7 +1,7 @@
 ---
 layout: post
 title: DevPack Philosophy a.k.a. "Works on YOUR Machine"
-date: 2014-05-09 16:26:46 +0200
+date: 2014-05-12 16:26:46 +0200
 comments: true
 categories: [DevPack, Windows, Java]
 published: false
