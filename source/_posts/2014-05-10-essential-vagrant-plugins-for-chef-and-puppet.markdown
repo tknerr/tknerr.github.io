@@ -36,3 +36,5 @@ Analogous to the Chef related plugins above here are their Puppet-specific count
 
 1. [vagrant-puppet-install](https://github.com/mlazarov/vagrant-puppet-install) - installs Puppet into a bare OS basebox
 2. [vagrant-librarian-puppet](https://github.com/mhahn/vagrant-librarian-puppet) - resolves Puppet module dependencies
+
+They are working in the same way as the Chef plugins above, not much more to say.
