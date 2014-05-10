@@ -170,6 +170,6 @@ In any case, you have now made sure that any executables within the DevPack are 
 
 Well, by now you should have a good enough idea of what a DevPack is and what its benefits are. You have seen an example for a Java DevPack above, but you could have DevPacks for any project or programming language.
 
-In fact I am currently writing this blog post using [Octopress](http://octopress.org/) which I have set up as part of a general purpose Ruby DevPack (to be published on Github soon). For working with Chef and Vagrant I'm using the [Bill's Kitchen](https://github.com/tknerr/bills-kitchen) DevPack.
+In fact I am currently writing this blog post using [Octopress](http://octopress.org/) which I have set up with a general purpose [Ruby DevPack](https://github.com/tknerr/ruby-devpack). For working with Chef and Vagrant I'm using the [Bill's Kitchen](https://github.com/tknerr/bills-kitchen) DevPack.
 
 So what are your "DevPacks"?
