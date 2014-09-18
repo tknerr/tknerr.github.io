@@ -166,7 +166,7 @@ Whenever you are working in another command shell remember that you have to manu
 
 In any case, you have now made sure that any executables within the DevPack are front of the `%PATH%` and thus preferred over whatever you have otherwise installed on your system. You also made sure that Maven will download it's depenencies to `Y:\home\.m2` rather than "infecting" other parts of your system outside the mounted drive.
 
-## Other DevPacks
+## More DevPacks
 
 Well, by now you should have a good enough idea of what a DevPack is and what its benefits are. You have seen an example for a Java DevPack above, but you could have DevPacks for any project or programming language.
 
