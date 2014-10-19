@@ -1,13 +1,13 @@
 ---
 layout: post
 title: DevPack Philosophy a.k.a. "Works on YOUR Machine"
-date: 2014-05-12 16:26:46 +0200
+date: 2014-10-09 06:26:46 +0200
 comments: true
 categories: [DevPack, Windows, Java]
-published: false
+published: true
 ---
 
-I'm working for a [smart tech company](http://www.zuehlke.com) and we naturally support many client projects. A typical situation that I encounter at customer site is this:
+Working for an [IT consultancy](http://www.zuehlke.com) I am mostly helping out clients getting their software development projects right. A typical situation that I encounter at customer site is this:
 
 > So you want to set up your development environment, right? Umm, ok, first install A,B,C, tweak some configuration file here, don't forget to set an env var there, and then it should just work. 
 
