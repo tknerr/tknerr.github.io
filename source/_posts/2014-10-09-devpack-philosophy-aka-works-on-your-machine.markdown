@@ -90,7 +90,7 @@ Once the DevPack zip file is unpacked the content / structure of it's root direc
 
 First of all, you should run the `mount-Y-drive.bat` script located at the root of the DevPack. Once you have run it the `Y:` drive will be mounted and pointing to this directory. The script looks like this:
 
-```bat mount-y-drive.bat
+```bat mount-Y-drive.bat
 :: get path to this script
 set SCRIPT_DIR=%~dp0
 :: ugh, need to remove trailing '\'
@@ -101,7 +101,7 @@ subst Y: "%MOUNT_PATH%"
 
 Btw: the inverse `unmount-Y-drive.bat` script is even simpler:
 
-```bat unmount-Y-drive.bat mark:2
+```bat unmount-Y-drive.bat
 :: unmount the Y: drive letter
 subst /D Y:
 ```
