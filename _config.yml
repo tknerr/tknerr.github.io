@@ -3,13 +3,12 @@
 # ----------------------- #
 
 url: http://blog.tknerr.de
-title: tknerr's Techmumble Octo-Blog
-subtitle: "Chef, Vagrant and other stuff that matters..."
+title: tknerr's random thoughts
+subtitle: read it or leave it
 author: Torben Knerr
 simple_search: https://www.google.com/search
 description: >
-  infrastructure-as-code with vagrant, chef and berkshelf,
-  spiced with pieces of ruby and maybe bits of java.
+  probably lots of infrastructure-as-code, but other stuff as well.
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
