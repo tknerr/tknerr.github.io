@@ -22,4 +22,4 @@ env:
   # $ travis encrypt --add GH_TOKEN=your_token
   global:
     - GH_REPO="tknerr/tknerr.github.io"
-    - secure: "nO/o0wXelYaV/jeIoeFqmO5a2jvxtZK03e2aYyXsBVqJ7p8i6wSndBo3kbvFxnoLa+GA74gB27HlMxMaMJE7iFql/xCmk+sOiRhH0IFpahzHrZUTFjTJ20IV5CgQd+6AORXDKr/zM0OVHMf+IRO5JrmNorraV6vm+T76vRnsQyM="
+    - secure: "sAMVfj8wzGmRNIGX2r2UyJyiGb44616kmrAvI05dL0eHK5BfkaK4uzoAniU0XUoHHWN8+MMRzEXQJPBYj3EIB/ZVkvWLe2mBU2hYJpeF7LxpfK/8L3OOt2Osbx09BYTiyg3PqSV/JerbV1XqQAiXPd+YhNzqDTLrqs+9/RiD0QA="
