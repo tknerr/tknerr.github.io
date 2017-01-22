@@ -1,6 +1,6 @@
 ## About
 
-This is the [Octopress](http://octopress.org/docs/) source branch of [my techblog](http://blog.tknerr.de). It contains the theme, layout, styling and most importantly the posts in [markdown format](daringfireball.net/projects/markdown/) in the `source/_posts` directory. 
+This is the [Octopress](http://octopress.org/docs/) source branch of [my techblog](http://blog.tknerr.de). It contains the theme, layout, styling and most importantly the posts in [markdown format](daringfireball.net/projects/markdown/) in the `source/_posts` directory.
 
 It is hosted on [Github Pages](https://help.github.com/categories/20/articles) but with a [custom domain name](https://github.com/tknerr/tknerr.github.io/blob/source/source/CNAME). The site [regeneration and deplyoment](http://octopress.org/docs/deploying/github/) happens automatically via [travis-ci](https://travis-ci.org/) whenever something is pushed to the `source` branch (thanks to [this guide](http://rogerz.github.io/blog/2013/02/21/prose-io-github-travis-ci/)).
 
@@ -20,7 +20,37 @@ Eventually I might create / edit posts on [prose.io](prose.io/#tknerr/tknerr.git
   * `git push origin source`
 
 
-Credits to @trunkclub for their guide [on setting this whole thing up](http://techblog.trunkclub.com/moving-from-tumblr-to-octopress/). 
+Credits to @trunkclub for their guide [on setting this whole thing up](http://techblog.trunkclub.com/moving-from-tumblr-to-octopress/).
+
+## Get the Environment Up and Running in Docker
+
+To get the environment up and running in docker, start a `ruby:1.9.3` container:
+
+ * in interactive mode (`-it`), still you can detach from it via `ctrl-p` + `ctrl-q`, and use `docker attach` to re-attach
+ * with the current directory mounted to `/repo` inside the container (`-v $(pwd):/repo`)
+ * with port 4000 forwarded to http://localhost:4040 (`-p 4040:4000`)
+
+Start it with `/bin/bash` as the entry point to get a bash session you can work in:
+```
+docker run -it -p 4040:4000 -v $(pwd):/repo ruby:1.9.3 /bin/bash
+> cd /repo
+> bundle install
+> export RUBYOPT="-KU -E utf-8:utf-8"
+> rake new_post["foo"]
+> rake isolate["foo"]
+> rake preview
+> # ... write blog post
+> rake integrate
+> rake generate
+> rake setup_github_pages["https://tknerr@github.com/tknerr/tknerr.github.io.git"]
+> rake deploy
+```
+
+For a one-off command to generate the site and run it in preview mode:
+```
+docker run --rm -it -p 4040:4000 -v $(pwd):/repo ruby:1.9.3 /bin/bash -c 'cd /repo; export RUBYOPT="-KU -E utf-8:utf-8"; bundle install; rake generate; rake preview'
+```
+
 
 
 ## What is Octopress?
