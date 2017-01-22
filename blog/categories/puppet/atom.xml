@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Puppet | tknerr's blog]]></title>
+  <link href="http://blog.tknerr.de/blog/categories/puppet/atom.xml" rel="self"/>
+  <link href="http://blog.tknerr.de/"/>
+  <updated>2017-01-22T00:37:03+00:00</updated>
+  <id>http://blog.tknerr.de/</id>
+  <author>
+    <name><![CDATA[Torben Knerr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Essential Vagrant Plugins for Chef and Puppet]]></title>
+    <link href="http://blog.tknerr.de/blog/2014/05/09/essential-vagrant-plugins-for-chef-and-puppet/"/>
+    <updated>2014-05-09T23:17:50+00:00</updated>
+    <id>http://blog.tknerr.de/blog/2014/05/09/essential-vagrant-plugins-for-chef-and-puppet</id>
+    <content type="html"><![CDATA[<p>Since the time I started working with Vagrant a few years ago some plugins have become really essential and indispensable for me:</p>
+
+<ol>
+<li><a href="https://github.com/fgrehm/vagrant-cachier">vagrant-cachier</a> &ndash; caches packages downloaded within the VMs on the host</li>
+<li><a href="https://github.com/fgrehm/bindler">bindler</a> &ndash; Bundler-like plugin management for Vagrant. Only for Vagrant &lt; 1.4 :&ndash;((</li>
+<li><a href="https://tmatilai.github.io/vagrant-proxyconf/">vagrant-proxyconf</a> &ndash; dead easy proxy configuration for the VMs</li>
+</ol>
+
+
+<p>If you are using Chef or Puppet together with Vagrant, the following plugins should also be of interest for you:</p>
+
+<!-- more -->
+
+
+<h2>Using Vagrant with Chef</h2>
+
+<p>When working with Vagrant and Chef these plugins are indispensable:</p>
+
+<ol>
+<li><a href="https://github.com/schisamo/vagrant-omnibus">vagrant-omnibus</a> &ndash; installs Chef into a bare OS basebox</li>
+<li><a href="https://github.com/berkshelf/vagrant-berkshelf">vagrant-berkshelf</a> &ndash; resolves Chef cookbook dependencies</li>
+</ol>
+
+
+<p>The first one makes sure that Chef gets installed in the desired version into a bare OS basebox, e.g. you can use the bare OS <a href="https://github.com/opscode/bento">bento baseboxes</a> and have Chef being automatically installed on <code>vagrant up</code>.</p>
+
+<p>The second one integrates <a href="http://berkshelf.com/">Berkshelf</a>, a dependency manager for Chef cookbooks with Vagrant. With that plugin  cookbook dependencies are automatically resolved on <code>vagrant up</code>.</p>
+
+<p>Here is an <a href="https://github.com/tknerr/sample-application-cookbook/blob/master/Vagrantfile">example Vagrantfile</a> using the two plugins.</p>
+
+<h2>Using Vagrant with Puppet</h2>
+
+<p>Analogous to the Chef related plugins above here are their Puppet-specific counterparts:</p>
+
+<ol>
+<li><a href="https://github.com/petems/vagrant-puppet-install">vagrant-puppet-install</a> &ndash; installs Puppet into a bare OS basebox</li>
+<li><a href="https://github.com/mhahn/vagrant-librarian-puppet">vagrant-librarian-puppet</a> &ndash; resolves Puppet module dependencies</li>
+</ol>
+
+
+<p>They are working in the same way as the Chef plugins above, not much more to say.</p>
+]]></content>
+  </entry>
+  
+</feed>

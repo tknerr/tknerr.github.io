@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: DevPack | tknerr's blog]]></title>
+  <link href="http://blog.tknerr.de/blog/categories/devpack/atom.xml" rel="self"/>
+  <link href="http://blog.tknerr.de/"/>
+  <updated>2017-01-22T00:37:03+00:00</updated>
+  <id>http://blog.tknerr.de/</id>
+  <author>
+    <name><![CDATA[Torben Knerr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[DevPack Philosophy a.k.a. "Works on YOUR Machine"]]></title>
+    <link href="http://blog.tknerr.de/blog/2014/10/09/devpack-philosophy-aka-works-on-your-machine/"/>
+    <updated>2014-10-09T04:26:46+00:00</updated>
+    <id>http://blog.tknerr.de/blog/2014/10/09/devpack-philosophy-aka-works-on-your-machine</id>
+    <content type="html"><![CDATA[<p>Working for an <a href="http://www.zuehlke.com">IT consultancy</a> I am mostly helping out clients getting their software development projects right. A typical situation that I encounter at customer site is this:</p>
+
+<blockquote><p>So you want to set up your development environment, right? Umm, ok, first install A,B,C, tweak some configuration file here, don&rsquo;t forget to set an env var there, and then it should just work.</p></blockquote>
+
+<p>Nope, it does not. And it gets even further&hellip;</p>
+
+<!-- more -->
+
+
+<blockquote><p>Oh, it does not? Maybe you need a newer Java, let&rsquo;s try that. Ummm, still not working, have you installed all the Eclipse plugins that Bobby has? Hmmm, which version of the plugins did you install? I remember Alice used an older version of the foo plugin there and had to set an absolute path to the baz installation somewhere. Ohy yes, baz requires bar as a prerequisite, so you should install that as well. WTF, still not working?! So why don&rsquo;t you just copy over Bobby&rsquo;s whole Eclipse directory, maybe this will do the trick&hellip;"</p></blockquote>
+
+<p>Eeeek. Congrats. You have run into a perfect example of the <a href="http://blog.codinghorror.com/the-works-on-my-machine-certification-program/">&ldquo;works on my machine&rdquo;</a> syndrome.</p>
+
+<p>But we can do better, so lets fix that!</p>
+
+<h2>Two Ways for Fixing &ldquo;Works on My Machine&rdquo;</h2>
+
+<p><img class="right <a" src="href="http://blog.codinghorror.com/content/images/uploads/2007/03/6a0120a85dcdae970b0128776ff992970c-pi.png">http://blog.codinghorror.com/content/images/uploads/2007/03/6a0120a85dcdae970b0128776ff992970c-pi.png</a>" width="180"></p>
+
+<p>In order to fix the &ldquo;works on my machine&rdquo; issues you need to ensure that every developer has an isolated environment that is specifically tailored for the given project.</p>
+
+<p>Two common approaches to that are:</p>
+
+<ol>
+<li>Using a VM with all software pre-installed (bonus points for distributing a <a href="https://docs.vagrantup.com/v2/vagrantfile/">Vagrantfile</a> rather than raw VM images)</li>
+<li>Using a &ldquo;DevPack&rdquo;, which is simply zip package containing all required software. No installation, just extract and start hacking.</li>
+</ol>
+
+
+<h2>The VM Approach</h2>
+
+<p>Using VMs for isolated development environments is probably the most commonly known approach, so I will not discuss it much further here. There are pros and cons of using VMs, e.g. the level of isolation that you get vs. the performance penalty due to runtime overhead of the hypervisor. There are more leightweight alternatives such as <a href="https://linuxcontainers.org/">linux containers</a>, but they work only under Linux and not all distributions are supporting them.</p>
+
+<p>In the simplest case the VMs are distributed as large binary image files (typically .ova format), which are nothing more than a hard disk image plus some metadata describing the VM configuration.</p>
+
+<p>If you want to keep this manageable and reproducable though (think of shipping updates for the development environment) you should use configuration management tools such as <a href="http://www.getchef.com">Chef</a> or <a href="http://www.puppetlabs.com">Puppet</a>. Both integrate neatly with <a href="http://www.vagrantup.com">Vagrant</a> which provides a common interface for dealing with VMs.</p>
+
+<h2>The DevPack Approach / DevPack Philosophy</h2>
+
+<p>A completely different yet more lightweight approach is to use so-called &ldquo;DevPacks&rdquo;. Not sure if anybody else calls them so, but at least I do and I also have a clear definition of what &ldquo;DevPack&rdquo; means to me (if you have a better name for it let me know ;&ndash;)).</p>
+
+<p>So this is how I define a DevPack and what can be summarized as the &ldquo;philosophy&rdquo; behind a DevPack in terms of the three rules below.</p>
+
+<h3>Rule #1: Self-Contained Package</h3>
+
+<p>A DevPack is a simple, self-contained .zip (or .tar, .7z, whatever) package. It contains:</p>
+
+<ul>
+<li>all required software that you need for developing</li>
+<li>a <code>mount.bat</code> script which mounts the current directory to a designated drive letter</li>
+<li>a <code>set-env.bat</code> script that sets the <code>%PATH%</code> and other env vars accordingly</li>
+<li>a dedicated <code>%HOME%</code> directory so it will not interfere with your actual home directory (isolation is king!)</li>
+<li>a workspace containing the repos / source code you work with</li>
+</ul>
+
+
+<h3>Rule #2: No Installation &ndash; Just Unzip, Mount and Code</h3>
+
+<p>In order to use a DevPack:</p>
+
+<ol>
+<li> you unzip the DevPack to a directory on your system</li>
+<li> you mount the contents of that directory to a designated drive letter via the <code>mount.bat</code> script</li>
+<li> you run a <code>set-env.bat</code> which sets the environment</li>
+<li> you start hacking</li>
+</ol>
+
+
+<p>There is no installation involved, just unzip, mount and start hacking.</p>
+
+<h3>Rule #3: Isolation &ndash; Everything on the Mounted Drive</h3>
+
+<p>This means that everything happens within the mounted drive, i.e. any software that is contained within the DevPack:</p>
+
+<ul>
+<li>should not make assumptions about any specific software being installed on your system</li>
+<li>should not make assumptions about any other files being present outside the mounted drive</li>
+<li>should not write files to anywhere outside the mounted drive (thus the dedicated <code>%HOME%</code> directory)</li>
+</ul>
+
+
+<p>Yes, this does not come for free, and you have to ensure that all software bundled within the DevPack is properly configured so that it does not reference anything the mounted drive.</p>
+
+<p>And yes, relative paths should be used whenever possible, but at some point in time you will need to set an absolute path somewhere and in that moment you will be happy that everyone in your team shares the same paths because the DevPack is mounted to a common designated drive letter.</p>
+
+<h2>A Java DevPack Example</h2>
+
+<p>This was quite much text, so let&rsquo;s look at at an example now, which is taken from the last Java project I was working on.</p>
+
+<p>Once the DevPack zip file is unpacked the content / structure of it&rsquo;s root directory looks like this:</p>
+
+<p><img src="/images/java_devpack_unmounted.png"></p>
+
+<p>First of all, you should run the <code>mount-Y-drive.bat</code> script located at the root of the DevPack. Once you have run it the <code>Y:</code> drive will be mounted and pointing to this directory. The script looks like this:</p>
+
+<p><code>bat mount-Y-drive.bat
+:: get path to this script
+set SCRIPT_DIR=%~dp0
+:: ugh, need to remove trailing '\'
+set MOUNT_PATH=%SCRIPT_DIR:~0,-1%
+:: subst is mounting the given dir to a drive letter
+subst Y: "%MOUNT_PATH%"
+</code></p>
+
+<p>Btw: the inverse <code>unmount-Y-drive.bat</code> script is even simpler:</p>
+
+<p><code>bat unmount-Y-drive.bat
+:: unmount the Y: drive letter
+subst /D Y:
+</code></p>
+
+<p>Now, looking at the <code>Y:\tools</code> directory you can see which software is part of this DevPack:</p>
+
+<ul>
+<li>it starts with a specific JDK version</li>
+<li>includes Maven, ant, ivy for the build and dependency management</li>
+<li>contains a pre-configured Eclipse IDE (with any plugins preinstalled)</li>
+<li>the GlassFish application server</li>
+<li>command line tools such as svn, git, putty</li>
+<li>and finally a better windows console (ConEmu)</li>
+</ul>
+
+
+<p><img src="/images/java_devpack_tools_eclipse.png"></p>
+
+<p>Finally, putting all the pieces together, you need the <code>set-env.bat</code> script which ensures that the DevPack local binaries are in front of the <code>%PATH%</code> and sets some other env vars:</p>
+
+<p>```bat set-env.bat
+@echo off</p>
+
+<p>:: ########################################################
+:: # Setting up Environment&hellip;
+:: ########################################################</p>
+
+<p>set SCRIPT_DIR=%~dp0</p>
+
+<p>:: for these we need the bin dirs in PATH
+set JADDIR=%SCRIPT_DIR%tools\jad
+set CONEMUDIR=%SCRIPT_DIR%tools\conemu
+set PUTTYDIR=%SCRIPT_DIR%tools\putty
+set MAVENDIR=%SCRIPT_DIR%tools\maven-3.0.5
+set JAVADIR=%SCRIPT_DIR%tools\jdk1.7.0_21
+set ANTDIR=%SCRIPT_DIR%tools\apache-ant-1.8.4
+set IVYDIR=%SCRIPT_DIR%tools\apache-ivy-2.3.0
+set SVNDIR=%SCRIPT_DIR%tools\sliksvn
+set SQLDEVELOPERDIR=%SCRIPT_DIR%tools\sqldeveloper
+set KDIFF3DIR=%SCRIPT_DIR%tools\kdiff3</p>
+
+<p>:: use portable git, looks for %HOME%.gitconfig
+set GITDIR=%SCRIPT_DIR%tools\portablegit
+set HOME=%SCRIPT_DIR%home</p>
+
+<p>:: set JAVA_HOME
+set JAVA_HOME=%JAVADIR%</p>
+
+<p>:: set Maven env vars
+set M2_HOME=%MAVEN_DIR%
+set MAVEN_OPTS=-Duser.home=%HOME%</p>
+
+<p>:: prepend devpack-included software binaries to the $PATH
+set PATH=%KDIFF3DIR%;%GITDIR%\bin;%SQLDEVELOPERDIR%;%SVNDIR%\bin;%ANTDIR%\bin;%JAVADIR%\bin;%MAVENDIR%\bin;%PUTTYDIR%;%CONEMUDIR%;%JADDIR%;%M2_HOME%\bin;%PATH%
+```</p>
+
+<p>The above script is automatically run whenever you launch either the <code>ConEmu.exe.lnk</code> or <code>eclipse.exe.lnk</code> shortcuts. The shortcut targets had to be adjusted to make this work:</p>
+
+<ul>
+<li>for eclipse: <code>Y:\set-env.bat &amp;&amp; Y:\tools\eclipse-4.3.1\eclipse.exe -data Y:\workspace</code></li>
+<li>for ConEmu: <code>Y:\tools\conemu\ConEmu.exe /cmd cmd /K Y:\set-env.bat</code></li>
+</ul>
+
+
+<p>Whenever you are working in another command shell remember that you have to manually call the <code>set-env.bat</code> script in order to have the environment properly set up.</p>
+
+<p>In any case, you have now made sure that any executables within the DevPack are front of the <code>%PATH%</code> and thus preferred over whatever you have otherwise installed on your system. You also made sure that Maven will download it&rsquo;s depenencies to <code>Y:\home\.m2</code> rather than &ldquo;infecting&rdquo; other parts of your system outside the mounted drive.</p>
+
+<h2>More DevPacks</h2>
+
+<p>Well, by now you should have a good enough idea of what a DevPack is and what its benefits are. You have seen an example for a Java DevPack above, but you could have DevPacks for any project or programming language.</p>
+
+<p>In fact I am currently writing this blog post using <a href="http://octopress.org/">Octopress</a> which I have set up with a general purpose <a href="https://github.com/tknerr/ruby-devpack">Ruby DevPack</a>. For working with Chef and Vagrant I&rsquo;m using the <a href="https://github.com/tknerr/bills-kitchen">Bill&rsquo;s Kitchen</a> DevPack.</p>
+
+<p>So what are your &ldquo;DevPacks&rdquo;?</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ruby | tknerr's blog]]></title>
+  <link href="http://blog.tknerr.de/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://blog.tknerr.de/"/>
+  <updated>2017-01-22T00:37:03+00:00</updated>
+  <id>http://blog.tknerr.de/</id>
+  <author>
+    <name><![CDATA[Torben Knerr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ode to _why (and His Poignant Guide)]]></title>
+    <link href="http://blog.tknerr.de/blog/2014/09/18/ode-to-why-and-his-poignant-guide/"/>
+    <updated>2014-09-18T06:29:44+00:00</updated>
+    <id>http://blog.tknerr.de/blog/2014/09/18/ode-to-why-and-his-poignant-guide</id>
+    <content type="html"><![CDATA[<p>If you are learning Ruby you have definitely have to check out <a href="http://mislav.uniqpath.com/poignant-guide/">&ldquo;Why&rsquo;s Poignant Guide to Ruby&rdquo;</a>, which is probably the most fun to read an introduction to the Ruby programming language ever.</p>
+
+<p><img src="/images/poignantguide_nhcham.png"></p>
+
+<p>But who is this guy called &ldquo;_why&rdquo; and why shoud I read his guide&hellip;?</p>
+
+<!-- more -->
+
+
+<h2>Who the <strong>*beep*</strong> is _why?</h2>
+
+<p>It&rsquo;s author, <a href="https://en.wikipedia.org/wiki/Why_the_lucky_stiff">why the lucky stiff</a> (or in short &ldquo;_why&rdquo;) was as creative mastermind who massively influenced the Ruby community with his works. The community was shocked when he (or rather his online persona &ldquo;_why&rdquo; &mdash; nobody knew his real name) suddenly disappeared back in 2009 and took all of his source code and web sites offline.</p>
+
+<p><img class="left" src="/images/poignantguide_whytheluckystiff.jpg"></p>
+
+<p>His disappearance keeps being a mystery, but his works are still famous and considered &ldquo;classics&rdquo; among Rubyists. There is a <a href="http://viewsourcecode.org/why">backup of all his contributions</a> available (including source code, libraries, writings, music, comics and other artworks) if you are curious.</p>
+
+<p>Also, the smashing magazine published an <a href="http://www.smashingmagazine.com/2010/05/15/why-a-tale-of-a-post-modern-genius/">insightful article</a> about _why and his works.</p>
+
+<blockquote><p>Why the Lucky Stiff (or _Why for short) was one of the brightest and most inspiring programmers in activity. He became famous through a series of blogs and through the incredible amount of open-source projects that he maintained over the course of more than seven years</p>
+
+<p>(the smashing magazine: <a href="http://www.smashingmagazine.com/2010/05/15/why-a-tale-of-a-post-modern-genius/">_Why: A Tale Of A Post-Modern Genius</a>)</p></blockquote>
+
+<h2>The Guide</h2>
+
+<p>Coming back to <a href="http://poignantguide.net/ruby/index.html">the poignant guide</a>: so <em>why</em> should you read it?</p>
+
+<p><strong>=> because it&rsquo;s simply the most fun and entertaining way of learning Ruby! :&ndash;)</strong></p>
+
+<p><img src="/images/poignantguide_foxes.png"></p>
+
+<p>While the <a href="http://poignantguide.net/">original website</a> is down, there is a <a href="http://mislav.uniqpath.com/poignant-guide/">mirror of the poignant guide</a> online where you can still read the book in <a href="http://mislav.uniqpath.com/poignant-guide/book/chapter-1.html">HTML</a> or <a href="http://www.rubyinside.com/media/poignant-guide.pdf">PDF</a> form.</p>
+
+<p>Now go ahead, pick the guide and <a href="http://tryruby.org/levels/1/challenges/0">try ruby</a>! :&ndash;)</p>
+]]></content>
+  </entry>
+  
+</feed>

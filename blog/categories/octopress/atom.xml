@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Octopress | tknerr's blog]]></title>
+  <link href="http://blog.tknerr.de/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://blog.tknerr.de/"/>
+  <updated>2017-01-22T00:37:03+00:00</updated>
+  <id>http://blog.tknerr.de/</id>
+  <author>
+    <name><![CDATA[Torben Knerr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Blogging With Octopress]]></title>
+    <link href="http://blog.tknerr.de/blog/2014/05/07/blogging-with-octopress/"/>
+    <updated>2014-05-07T19:50:25+00:00</updated>
+    <id>http://blog.tknerr.de/blog/2014/05/07/blogging-with-octopress</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m happy to own a shiny new <a href="http://octopress.org">Octopress</a> based blog now. It is as lean and simple, yet comfortable as it possibly can get: cms-free, git-based, markdown syntax, and with web-based editing comfort.</p>
+
+<p>The articles below were both inspiring and essentially helpful for setting everything up:</p>
+
+<ul>
+<li>How to build <a href="http://developmentseed.org/blog/2012/07/27/build-cms-free-websites/">CMS-free Websites</a> with Github Pages and Jekyll</li>
+<li>How trunk club <a href="http://techblog.trunkclub.com/moving-from-tumblr-to-octopress/">moved to Octopress + Prose + Github + Travis CI</a></li>
+</ul>
+
+
+<p>Further am I now convinced that this is the utmost perfect and one and only acceptable solution you should ever build a blog with ;&ndash;)</p>
+
+<!-- more -->
+
+
+<h2>Ingredients</h2>
+
+<p>The basic ingredients for such a beautiful blogging platform are:</p>
+
+<ul>
+<li>git for version control</li>
+<li>github pages for hosting</li>
+<li>markdown for syntax</li>
+<li>octopress for structure / template / plugins / workflow</li>
+<li>travis-ci for automatically publishing changes</li>
+<li>prose.io for online editing (optional)</li>
+</ul>
+
+
+<h2>Further Links and Documentation</h2>
+
+<p>Everything you need to know (documentation wise) for taming octo-blogs like these:</p>
+
+<ul>
+<li>Official <a href="http://octopress.org/docs/">Octopress Docs</a></li>
+<li>Octopress Wiki: <a href="https://github.com/imathis/octopress/wiki/3rd-party-plugins">3rd Party Plugins</a></li>
+<li>The <a href="http://jekyllrb.com/docs/home/">Jekyll Docs</a></li>
+<li>Prose Wiki: <a href="https://github.com/prose/prose/wiki/Getting-Started">Getting Started</a></li>
+<li>Writing in <a href="http://daringfireball.net/projects/markdown/syntax">Markdown Syntax</a></li>
+<li>Help with <a href="https://help.github.com/categories/20/articles">Github Pages</a></li>
+</ul>
+
+
+<h2>Workflow</h2>
+
+<p>The workflow for creating and publishing posts is:</p>
+
+<ol>
+<li>clone repo and check out the <code>source</code> branch (never edit <code>master</code> directly!)
+
+<ul>
+<li><code>git clone git@github.com:tknerr/tknerr.github.io.git</code></li>
+<li><code>git checkout source</code></li>
+</ul>
+</li>
+<li>create / edit the posts
+
+<ul>
+<li><code>rake new_post["some title"]</code></li>
+<li><code>vi source/_posts/YYYY-MM-DD-some-title.markdown</code></li>
+</ul>
+</li>
+<li>preview your changes
+
+<ul>
+<li><code>rake generate</code> (first time only, or whenever layout or config changes)</li>
+<li><code>rake preview &amp;</code> (or <code>start /B rake preview</code> on windows)</li>
+</ul>
+</li>
+<li>deploy changes
+
+<ul>
+<li><code>git add . &amp;&amp; git commit -m "add new blog post about foo"</code></li>
+<li><code>git push origin source</code></li>
+<li><em>wait a minute for travis-ci to regenerate and deploy the site</em></li>
+</ul>
+</li>
+</ol>
+
+
+<p>More details <a href="https://github.com/tknerr/tknerr.github.io#about">here</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hello World]]></title>
+    <link href="http://blog.tknerr.de/blog/2014/05/07/hello-world/"/>
+    <updated>2014-05-07T10:27:23+00:00</updated>
+    <id>http://blog.tknerr.de/blog/2014/05/07/hello-world</id>
+    <content type="html"><![CDATA[<p>Obligatory first post:</p>
+
+<blockquote><p><strong>&ldquo;Ohai there Octo-Bloggers around the world! :&ndash;)&rdquo;</strong></p></blockquote>
+
+<p>```plain Wave your hands! <a href="http://www.ascii-art.de/ascii/ghi/hand.txt">http://www.ascii-art.de/ascii/ghi/hand.txt</a> ASCII hand borrowed from here</p>
+
+<pre><code>                    _.-._
+                   | | | |_
+            . /    | | | | |
+           | |     | | | | |  \
+           \ \   _ |  '-._ |   | |
+            \    \`\`-.'-._;   / |
+             `    \    '   |    /
+                   \  .`  /    ´
+                    |    | 
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+</feed>

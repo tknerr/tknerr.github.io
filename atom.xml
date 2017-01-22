@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[tknerr's blog]]></title>
+  <link href="http://blog.tknerr.de/atom.xml" rel="self"/>
+  <link href="http://blog.tknerr.de/"/>
+  <updated>2017-01-22T00:37:03+00:00</updated>
+  <id>http://blog.tknerr.de/</id>
+  <author>
+    <name><![CDATA[Torben Knerr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[DevPack Philosophy a.k.a. "Works on YOUR Machine"]]></title>
+    <link href="http://blog.tknerr.de/blog/2014/10/09/devpack-philosophy-aka-works-on-your-machine/"/>
+    <updated>2014-10-09T04:26:46+00:00</updated>
+    <id>http://blog.tknerr.de/blog/2014/10/09/devpack-philosophy-aka-works-on-your-machine</id>
+    <content type="html"><![CDATA[<p>Working for an <a href="http://www.zuehlke.com">IT consultancy</a> I am mostly helping out clients getting their software development projects right. A typical situation that I encounter at customer site is this:</p>
+
+<blockquote><p>So you want to set up your development environment, right? Umm, ok, first install A,B,C, tweak some configuration file here, don&rsquo;t forget to set an env var there, and then it should just work.</p></blockquote>
+
+<p>Nope, it does not. And it gets even further&hellip;</p>
+
+<!-- more -->
+
+
+<blockquote><p>Oh, it does not? Maybe you need a newer Java, let&rsquo;s try that. Ummm, still not working, have you installed all the Eclipse plugins that Bobby has? Hmmm, which version of the plugins did you install? I remember Alice used an older version of the foo plugin there and had to set an absolute path to the baz installation somewhere. Ohy yes, baz requires bar as a prerequisite, so you should install that as well. WTF, still not working?! So why don&rsquo;t you just copy over Bobby&rsquo;s whole Eclipse directory, maybe this will do the trick&hellip;&#8221;</p></blockquote>
+
+<p>Eeeek. Congrats. You have run into a perfect example of the <a href="http://blog.codinghorror.com/the-works-on-my-machine-certification-program/">&ldquo;works on my machine&rdquo;</a> syndrome.</p>
+
+<p>But we can do better, so lets fix that!</p>
+
+<h2>Two Ways for Fixing &ldquo;Works on My Machine&rdquo;</h2>
+
+<p><img class="right" src="http://blog.codinghorror.com/content/images/uploads/2007/03/6a0120a85dcdae970b0128776ff992970c-pi.png" width="180"></p>
+
+<p>In order to fix the &ldquo;works on my machine&rdquo; issues you need to ensure that every developer has an isolated environment that is specifically tailored for the given project.</p>
+
+<p>Two common approaches to that are:</p>
+
+<ol>
+<li>Using a VM with all software pre-installed (bonus points for distributing a <a href="https://docs.vagrantup.com/v2/vagrantfile/">Vagrantfile</a> rather than raw VM images)</li>
+<li>Using a &ldquo;DevPack&rdquo;, which is simply zip package containing all required software. No installation, just extract and start hacking.</li>
+</ol>
+
+
+<h2>The VM Approach</h2>
+
+<p>Using VMs for isolated development environments is probably the most commonly known approach, so I will not discuss it much further here. There are pros and cons of using VMs, e.g. the level of isolation that you get vs. the performance penalty due to runtime overhead of the hypervisor. There are more leightweight alternatives such as <a href="https://linuxcontainers.org/">linux containers</a>, but they work only under Linux and not all distributions are supporting them.</p>
+
+<p>In the simplest case the VMs are distributed as large binary image files (typically .ova format), which are nothing more than a hard disk image plus some metadata describing the VM configuration.</p>
+
+<p>If you want to keep this manageable and reproducable though (think of shipping updates for the development environment) you should use configuration management tools such as <a href="http://www.getchef.com">Chef</a> or <a href="http://www.puppetlabs.com">Puppet</a>. Both integrate neatly with <a href="http://www.vagrantup.com">Vagrant</a> which provides a common interface for dealing with VMs.</p>
+
+<h2>The DevPack Approach / DevPack Philosophy</h2>
+
+<p>A completely different yet more lightweight approach is to use so-called &ldquo;DevPacks&rdquo;. Not sure if anybody else calls them so, but at least I do and I also have a clear definition of what &ldquo;DevPack&rdquo; means to me (if you have a better name for it let me know ;&ndash;)).</p>
+
+<p>So this is how I define a DevPack and what can be summarized as the &ldquo;philosophy&rdquo; behind a DevPack in terms of the three rules below.</p>
+
+<h3>Rule #1: Self-Contained Package</h3>
+
+<p>A DevPack is a simple, self-contained .zip (or .tar, .7z, whatever) package. It contains:</p>
+
+<ul>
+<li>all required software that you need for developing</li>
+<li>a <code>mount.bat</code> script which mounts the current directory to a designated drive letter</li>
+<li>a <code>set-env.bat</code> script that sets the <code>%PATH%</code> and other env vars accordingly</li>
+<li>a dedicated <code>%HOME%</code> directory so it will not interfere with your actual home directory (isolation is king!)</li>
+<li>a workspace containing the repos / source code you work with</li>
+</ul>
+
+
+<h3>Rule #2: No Installation &ndash; Just Unzip, Mount and Code</h3>
+
+<p>In order to use a DevPack:</p>
+
+<ol>
+<li> you unzip the DevPack to a directory on your system</li>
+<li> you mount the contents of that directory to a designated drive letter via the <code>mount.bat</code> script</li>
+<li> you run a <code>set-env.bat</code> which sets the environment</li>
+<li> you start hacking</li>
+</ol>
+
+
+<p>There is no installation involved, just unzip, mount and start hacking.</p>
+
+<h3>Rule #3: Isolation &ndash; Everything on the Mounted Drive</h3>
+
+<p>This means that everything happens within the mounted drive, i.e. any software that is contained within the DevPack:</p>
+
+<ul>
+<li>should not make assumptions about any specific software being installed on your system</li>
+<li>should not make assumptions about any other files being present outside the mounted drive</li>
+<li>should not write files to anywhere outside the mounted drive (thus the dedicated <code>%HOME%</code> directory)</li>
+</ul>
+
+
+<p>Yes, this does not come for free, and you have to ensure that all software bundled within the DevPack is properly configured so that it does not reference anything the mounted drive.</p>
+
+<p>And yes, relative paths should be used whenever possible, but at some point in time you will need to set an absolute path somewhere and in that moment you will be happy that everyone in your team shares the same paths because the DevPack is mounted to a common designated drive letter.</p>
+
+<h2>A Java DevPack Example</h2>
+
+<p>This was quite much text, so let&rsquo;s look at at an example now, which is taken from the last Java project I was working on.</p>
+
+<p>Once the DevPack zip file is unpacked the content / structure of it&rsquo;s root directory looks like this:</p>
+
+<p><img src="http://blog.tknerr.de/images/java_devpack_unmounted.png"></p>
+
+<p>First of all, you should run the <code>mount-Y-drive.bat</code> script located at the root of the DevPack. Once you have run it the <code>Y:</code> drive will be mounted and pointing to this directory. The script looks like this:</p>
+
+<figure class='code'><figcaption><span>mount-Y-drive.bat</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bat'><span class='line'><span class="c">:: get path to this script</span>
+</span><span class='line'><span class="k">set</span> <span class="nv">SCRIPT_DIR</span><span class="o">=</span><span class="nv">%~dp0</span>
+</span><span class='line'><span class="c">:: ugh, need to remove trailing &#39;\&#39;</span>
+</span><span class='line'><span class="k">set</span> <span class="nv">MOUNT_PATH</span><span class="o">=</span><span class="nv">%SCRIPT_DIR:~0</span><span class="p">,</span><span class="m">-1</span>%
+</span><span class='line'><span class="c">:: subst is mounting the given dir to a drive letter</span>
+</span><span class='line'>subst Y: <span class="s2">&quot;%MOUNT_PATH%&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Btw: the inverse <code>unmount-Y-drive.bat</code> script is even simpler:</p>
+
+<figure class='code'><figcaption><span>unmount-Y-drive.bat</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bat'><span class='line'><span class="c">:: unmount the Y: drive letter</span>
+</span><span class='line'>subst <span class="n">/D</span> Y:
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, looking at the <code>Y:\tools</code> directory you can see which software is part of this DevPack:</p>
+
+<ul>
+<li>it starts with a specific JDK version</li>
+<li>includes Maven, ant, ivy for the build and dependency management</li>
+<li>contains a pre-configured Eclipse IDE (with any plugins preinstalled)</li>
+<li>the GlassFish application server</li>
+<li>command line tools such as svn, git, putty</li>
+<li>and finally a better windows console (ConEmu)</li>
+</ul>
+
+
+<p><img src="http://blog.tknerr.de/images/java_devpack_tools_eclipse.png"></p>
+
+<p>Finally, putting all the pieces together, you need the <code>set-env.bat</code> script which ensures that the DevPack local binaries are in front of the <code>%PATH%</code> and sets some other env vars:</p>
+
+<figure class='code'><figcaption><span>set-env.bat</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='bat'><span class='line'><span class="p">@</span><span class="k">echo</span> <span class="k">off</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">:: ########################################################</span>
+</span><span class='line'><span class="c">:: # Setting up Environment...</span>
+</span><span class='line'><span class="c">:: ########################################################</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">set</span> <span class="nv">SCRIPT_DIR</span><span class="o">=</span><span class="nv">%~dp0</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">:: for these we need the bin dirs in PATH</span>
+</span><span class='line'><span class="k">set</span> <span class="nv">JADDIR</span><span class="o">=</span><span class="nv">%SCRIPT_DIR%</span>tools\jad
+</span><span class='line'><span class="k">set</span> <span class="nv">CONEMUDIR</span><span class="o">=</span><span class="nv">%SCRIPT_DIR%</span>tools\conemu
+</span><span class='line'><span class="k">set</span> <span class="nv">PUTTYDIR</span><span class="o">=</span><span class="nv">%SCRIPT_DIR%</span>tools\putty
+</span><span class='line'><span class="k">set</span> <span class="nv">MAVENDIR</span><span class="o">=</span><span class="nv">%SCRIPT_DIR%</span>tools\maven<span class="m">-3</span>.<span class="m">0</span>.<span class="m">5</span>
+</span><span class='line'><span class="k">set</span> <span class="nv">JAVADIR</span><span class="o">=</span><span class="nv">%SCRIPT_DIR%</span>tools\jdk<span class="m">1</span>.<span class="m">7</span>.<span class="m">0</span>_<span class="m">21</span>
+</span><span class='line'><span class="k">set</span> <span class="nv">ANTDIR</span><span class="o">=</span><span class="nv">%SCRIPT_DIR%</span>tools\apache-ant<span class="m">-1</span>.<span class="m">8</span>.<span class="m">4</span>
+</span><span class='line'><span class="k">set</span> <span class="nv">IVYDIR</span><span class="o">=</span><span class="nv">%SCRIPT_DIR%</span>tools\apache-ivy<span class="m">-2</span>.<span class="m">3</span>.<span class="m">0</span>
+</span><span class='line'><span class="k">set</span> <span class="nv">SVNDIR</span><span class="o">=</span><span class="nv">%SCRIPT_DIR%</span>tools\sliksvn
+</span><span class='line'><span class="k">set</span> <span class="nv">SQLDEVELOPERDIR</span><span class="o">=</span><span class="nv">%SCRIPT_DIR%</span>tools\sqldeveloper
+</span><span class='line'><span class="k">set</span> <span class="nv">KDIFF3DIR</span><span class="o">=</span><span class="nv">%SCRIPT_DIR%</span>tools\kdiff<span class="m">3</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c">:: use portable git, looks for %HOME%\.gitconfig </span>
+</span><span class='line'><span class="k">set</span> <span class="nv">GITDIR</span><span class="o">=</span><span class="nv">%SCRIPT_DIR%</span>tools\portablegit
+</span><span class='line'><span class="k">set</span> <span class="nv">HOME</span><span class="o">=</span><span class="nv">%SCRIPT_DIR%</span>home
+</span><span class='line'>
+</span><span class='line'><span class="c">:: set JAVA_HOME</span>
+</span><span class='line'><span class="k">set</span> <span class="nv">JAVA_HOME</span><span class="o">=</span><span class="nv">%JAVADIR%</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">:: set Maven env vars</span>
+</span><span class='line'><span class="k">set</span> <span class="nv">M2_HOME</span><span class="o">=</span><span class="nv">%MAVEN_DIR%</span>
+</span><span class='line'><span class="k">set</span> <span class="nv">MAVEN_OPTS</span><span class="o">=</span>-Duser.home<span class="o">=</span><span class="nv">%HOME%</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c">:: prepend devpack-included software binaries to the $PATH</span>
+</span><span class='line'><span class="k">set</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">%KDIFF3DIR%</span>;<span class="nv">%GITDIR%</span>\bin;<span class="nv">%SQLDEVELOPERDIR%</span>;<span class="nv">%SVNDIR%</span>\bin;<span class="nv">%ANTDIR%</span>\bin;<span class="nv">%JAVADIR%</span>\bin;<span class="nv">%MAVENDIR%</span>\bin;<span class="nv">%PUTTYDIR%</span>;<span class="nv">%CONEMUDIR%</span>;<span class="nv">%JADDIR%</span>;<span class="nv">%M2_HOME%</span>\bin;<span class="nv">%PATH%</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above script is automatically run whenever you launch either the <code>ConEmu.exe.lnk</code> or <code>eclipse.exe.lnk</code> shortcuts. The shortcut targets had to be adjusted to make this work:</p>
+
+<ul>
+<li>for eclipse: <code>Y:\set-env.bat &amp;&amp; Y:\tools\eclipse-4.3.1\eclipse.exe -data Y:\workspace</code></li>
+<li>for ConEmu: <code>Y:\tools\conemu\ConEmu.exe /cmd cmd /K Y:\set-env.bat</code></li>
+</ul>
+
+
+<p>Whenever you are working in another command shell remember that you have to manually call the <code>set-env.bat</code> script in order to have the environment properly set up.</p>
+
+<p>In any case, you have now made sure that any executables within the DevPack are front of the <code>%PATH%</code> and thus preferred over whatever you have otherwise installed on your system. You also made sure that Maven will download it&rsquo;s depenencies to <code>Y:\home\.m2</code> rather than &ldquo;infecting&rdquo; other parts of your system outside the mounted drive.</p>
+
+<h2>More DevPacks</h2>
+
+<p>Well, by now you should have a good enough idea of what a DevPack is and what its benefits are. You have seen an example for a Java DevPack above, but you could have DevPacks for any project or programming language.</p>
+
+<p>In fact I am currently writing this blog post using <a href="http://octopress.org/">Octopress</a> which I have set up with a general purpose <a href="https://github.com/tknerr/ruby-devpack">Ruby DevPack</a>. For working with Chef and Vagrant I&rsquo;m using the <a href="https://github.com/tknerr/bills-kitchen">Bill&rsquo;s Kitchen</a> DevPack.</p>
+
+<p>So what are your &ldquo;DevPacks&rdquo;?</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ode to _why (and His Poignant Guide)]]></title>
+    <link href="http://blog.tknerr.de/blog/2014/09/18/ode-to-why-and-his-poignant-guide/"/>
+    <updated>2014-09-18T06:29:44+00:00</updated>
+    <id>http://blog.tknerr.de/blog/2014/09/18/ode-to-why-and-his-poignant-guide</id>
+    <content type="html"><![CDATA[<p>If you are learning Ruby you have definitely have to check out <a href="http://mislav.uniqpath.com/poignant-guide/">&ldquo;Why&rsquo;s Poignant Guide to Ruby&rdquo;</a>, which is probably the most fun to read an introduction to the Ruby programming language ever.</p>
+
+<p><img src="http://blog.tknerr.de/images/poignantguide_nhcham.png"></p>
+
+<p>But who is this guy called &ldquo;_why&rdquo; and why shoud I read his guide&hellip;?</p>
+
+<!-- more -->
+
+
+<h2>Who the <strong>*beep*</strong> is _why?</h2>
+
+<p>It&rsquo;s author, <a href="https://en.wikipedia.org/wiki/Why_the_lucky_stiff">why the lucky stiff</a> (or in short &ldquo;_why&rdquo;) was as creative mastermind who massively influenced the Ruby community with his works. The community was shocked when he (or rather his online persona &ldquo;_why&rdquo; &mdash; nobody knew his real name) suddenly disappeared back in 2009 and took all of his source code and web sites offline.</p>
+
+<p><img class="left" src="http://blog.tknerr.de/images/poignantguide_whytheluckystiff.jpg"></p>
+
+<p>His disappearance keeps being a mystery, but his works are still famous and considered &ldquo;classics&rdquo; among Rubyists. There is a <a href="http://viewsourcecode.org/why">backup of all his contributions</a> available (including source code, libraries, writings, music, comics and other artworks) if you are curious.</p>
+
+<p>Also, the smashing magazine published an <a href="http://www.smashingmagazine.com/2010/05/15/why-a-tale-of-a-post-modern-genius/">insightful article</a> about _why and his works.</p>
+
+<blockquote><p>Why the Lucky Stiff (or _Why for short) was one of the brightest and most inspiring programmers in activity. He became famous through a series of blogs and through the incredible amount of open-source projects that he maintained over the course of more than seven years</p>
+
+<p>(the smashing magazine: <a href="http://www.smashingmagazine.com/2010/05/15/why-a-tale-of-a-post-modern-genius/">_Why: A Tale Of A Post-Modern Genius</a>)</p></blockquote>
+
+<h2>The Guide</h2>
+
+<p>Coming back to <a href="http://poignantguide.net/ruby/index.html">the poignant guide</a>: so <em>why</em> should you read it?</p>
+
+<p><strong>=> because it&rsquo;s simply the most fun and entertaining way of learning Ruby! :&ndash;)</strong></p>
+
+<p><img src="http://blog.tknerr.de/images/poignantguide_foxes.png"></p>
+
+<p>While the <a href="http://poignantguide.net/">original website</a> is down, there is a <a href="http://mislav.uniqpath.com/poignant-guide/">mirror of the poignant guide</a> online where you can still read the book in <a href="http://mislav.uniqpath.com/poignant-guide/book/chapter-1.html">HTML</a> or <a href="http://www.rubyinside.com/media/poignant-guide.pdf">PDF</a> form.</p>
+
+<p>Now go ahead, pick the guide and <a href="http://tryruby.org/levels/1/challenges/0">try ruby</a>! :&ndash;)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Essential Vagrant Plugins for Chef and Puppet]]></title>
+    <link href="http://blog.tknerr.de/blog/2014/05/09/essential-vagrant-plugins-for-chef-and-puppet/"/>
+    <updated>2014-05-09T23:17:50+00:00</updated>
+    <id>http://blog.tknerr.de/blog/2014/05/09/essential-vagrant-plugins-for-chef-and-puppet</id>
+    <content type="html"><![CDATA[<p>Since the time I started working with Vagrant a few years ago some plugins have become really essential and indispensable for me:</p>
+
+<ol>
+<li><a href="https://github.com/fgrehm/vagrant-cachier">vagrant-cachier</a> &ndash; caches packages downloaded within the VMs on the host</li>
+<li><a href="https://github.com/fgrehm/bindler">bindler</a> &ndash; Bundler-like plugin management for Vagrant. Only for Vagrant &lt; 1.4 :&ndash;((</li>
+<li><a href="https://tmatilai.github.io/vagrant-proxyconf/">vagrant-proxyconf</a> &ndash; dead easy proxy configuration for the VMs</li>
+</ol>
+
+
+<p>If you are using Chef or Puppet together with Vagrant, the following plugins should also be of interest for you:</p>
+
+<!-- more -->
+
+
+<h2>Using Vagrant with Chef</h2>
+
+<p>When working with Vagrant and Chef these plugins are indispensable:</p>
+
+<ol>
+<li><a href="https://github.com/schisamo/vagrant-omnibus">vagrant-omnibus</a> &ndash; installs Chef into a bare OS basebox</li>
+<li><a href="https://github.com/berkshelf/vagrant-berkshelf">vagrant-berkshelf</a> &ndash; resolves Chef cookbook dependencies</li>
+</ol>
+
+
+<p>The first one makes sure that Chef gets installed in the desired version into a bare OS basebox, e.g. you can use the bare OS <a href="https://github.com/opscode/bento">bento baseboxes</a> and have Chef being automatically installed on <code>vagrant up</code>.</p>
+
+<p>The second one integrates <a href="http://berkshelf.com/">Berkshelf</a>, a dependency manager for Chef cookbooks with Vagrant. With that plugin  cookbook dependencies are automatically resolved on <code>vagrant up</code>.</p>
+
+<p>Here is an <a href="https://github.com/tknerr/sample-application-cookbook/blob/master/Vagrantfile">example Vagrantfile</a> using the two plugins.</p>
+
+<h2>Using Vagrant with Puppet</h2>
+
+<p>Analogous to the Chef related plugins above here are their Puppet-specific counterparts:</p>
+
+<ol>
+<li><a href="https://github.com/petems/vagrant-puppet-install">vagrant-puppet-install</a> &ndash; installs Puppet into a bare OS basebox</li>
+<li><a href="https://github.com/mhahn/vagrant-librarian-puppet">vagrant-librarian-puppet</a> &ndash; resolves Puppet module dependencies</li>
+</ol>
+
+
+<p>They are working in the same way as the Chef plugins above, not much more to say.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Blogging With Octopress]]></title>
+    <link href="http://blog.tknerr.de/blog/2014/05/07/blogging-with-octopress/"/>
+    <updated>2014-05-07T19:50:25+00:00</updated>
+    <id>http://blog.tknerr.de/blog/2014/05/07/blogging-with-octopress</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m happy to own a shiny new <a href="http://octopress.org">Octopress</a> based blog now. It is as lean and simple, yet comfortable as it possibly can get: cms-free, git-based, markdown syntax, and with web-based editing comfort.</p>
+
+<p>The articles below were both inspiring and essentially helpful for setting everything up:</p>
+
+<ul>
+<li>How to build <a href="http://developmentseed.org/blog/2012/07/27/build-cms-free-websites/">CMS-free Websites</a> with Github Pages and Jekyll</li>
+<li>How trunk club <a href="http://techblog.trunkclub.com/moving-from-tumblr-to-octopress/">moved to Octopress + Prose + Github + Travis CI</a></li>
+</ul>
+
+
+<p>Further am I now convinced that this is the utmost perfect and one and only acceptable solution you should ever build a blog with ;&ndash;)</p>
+
+<!-- more -->
+
+
+<h2>Ingredients</h2>
+
+<p>The basic ingredients for such a beautiful blogging platform are:</p>
+
+<ul>
+<li>git for version control</li>
+<li>github pages for hosting</li>
+<li>markdown for syntax</li>
+<li>octopress for structure / template / plugins / workflow</li>
+<li>travis-ci for automatically publishing changes</li>
+<li>prose.io for online editing (optional)</li>
+</ul>
+
+
+<h2>Further Links and Documentation</h2>
+
+<p>Everything you need to know (documentation wise) for taming octo-blogs like these:</p>
+
+<ul>
+<li>Official <a href="http://octopress.org/docs/">Octopress Docs</a></li>
+<li>Octopress Wiki: <a href="https://github.com/imathis/octopress/wiki/3rd-party-plugins">3rd Party Plugins</a></li>
+<li>The <a href="http://jekyllrb.com/docs/home/">Jekyll Docs</a></li>
+<li>Prose Wiki: <a href="https://github.com/prose/prose/wiki/Getting-Started">Getting Started</a></li>
+<li>Writing in <a href="http://daringfireball.net/projects/markdown/syntax">Markdown Syntax</a></li>
+<li>Help with <a href="https://help.github.com/categories/20/articles">Github Pages</a></li>
+</ul>
+
+
+<h2>Workflow</h2>
+
+<p>The workflow for creating and publishing posts is:</p>
+
+<ol>
+<li>clone repo and check out the <code>source</code> branch (never edit <code>master</code> directly!)
+
+<ul>
+<li><code>git clone git@github.com:tknerr/tknerr.github.io.git</code></li>
+<li><code>git checkout source</code></li>
+</ul>
+</li>
+<li>create / edit the posts
+
+<ul>
+<li><code>rake new_post["some title"]</code></li>
+<li><code>vi source/_posts/YYYY-MM-DD-some-title.markdown</code></li>
+</ul>
+</li>
+<li>preview your changes
+
+<ul>
+<li><code>rake generate</code> (first time only, or whenever layout or config changes)</li>
+<li><code>rake preview &amp;</code> (or <code>start /B rake preview</code> on windows)</li>
+</ul>
+</li>
+<li>deploy changes
+
+<ul>
+<li><code>git add . &amp;&amp; git commit -m "add new blog post about foo"</code></li>
+<li><code>git push origin source</code></li>
+<li><em>wait a minute for travis-ci to regenerate and deploy the site</em></li>
+</ul>
+</li>
+</ol>
+
+
+<p>More details <a href="https://github.com/tknerr/tknerr.github.io#about">here</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hello World]]></title>
+    <link href="http://blog.tknerr.de/blog/2014/05/07/hello-world/"/>
+    <updated>2014-05-07T10:27:23+00:00</updated>
+    <id>http://blog.tknerr.de/blog/2014/05/07/hello-world</id>
+    <content type="html"><![CDATA[<p>Obligatory first post:</p>
+
+<blockquote><p><strong>&ldquo;Ohai there Octo-Bloggers around the world! :&ndash;)&rdquo;</strong></p></blockquote>
+
+<figure class='code'><figcaption><span>Wave your hands!</span><a href='http://www.ascii-art.de/ascii/ghi/hand.txt'>ASCII hand borrowed from here</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>                    _.-._
+</span><span class='line'>                   | | | |_
+</span><span class='line'>            . /    | | | | |
+</span><span class='line'>           | |     | | | | |  \
+</span><span class='line'>           \ \   _ |  '-._ |   | |
+</span><span class='line'>            \    \`\`-.'-._;   / |
+</span><span class='line'>             `    \    '   |    /
+</span><span class='line'>                   \  .`  /    ´
+</span><span class='line'>                    |    | </span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+</feed>
